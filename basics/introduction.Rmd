@@ -1,0 +1,83 @@
+---
+title: "Introduction to ggplot2"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+library(ggthemes)
+```
+
+A review of penguin dataframe.
+```{r}
+penguins
+```
+
+Scatterplot that shows all penguins and them flipper length and body mass.
+```{r}
+ggplot(data = penguins, 
+       mapping = aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point()
+```
+
+Add species as colored points.
+```{r}
+ggplot(data = penguins, 
+       mapping = aes(x = flipper_length_mm, y = body_mass_g, color = species)) +
+  geom_point()
+```
+
+Add smooth regresion line to each specie.
+```{r}
+ggplot(data = penguins, 
+       mapping = aes(x = flipper_length_mm, y = body_mass_g, color = species)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+Pass the responsability of color points to point geom, so that, at *local level*.
+```{r}
+ggplot(data = penguins, 
+       mapping = aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(mapping = aes(color = species)) +
+  geom_smooth(method = "lm")
+```
+
+For the legibility of the plot, i can add other shapes for each specie. This is 
+useful for people with color blindness and other differences of color vision.
+```{r}
+ggplot(data = penguins, 
+       mapping = aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(mapping = aes(color = species, shape = species)) +
+  geom_smooth(method = "lm")
+```
+
+For change label texts i use the function `labs()`.
+```{r}
+ggplot(data = penguins, 
+       mapping = aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(mapping = aes(color = species, shape = species)) +
+  geom_smooth(method = "lm") +
+  labs(
+    title = "Body mass and flipper length", 
+    subtitle = "Dimensions for Adelie, Chinstrap, and Gentoo Penguins", 
+    x = "Flipper length (mm)", 
+    y = "Body mass (g)", 
+    color = "Species", 
+    shape = "Species"
+  )
+```
+
+
+
+
+
+
+
+
+
+
+
