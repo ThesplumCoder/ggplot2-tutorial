@@ -37,3 +37,132 @@ ggplot(penguins, aes(x = body_mass_g, color = species, fill = species)) +
   )
 ```
 
+# Two categorical variables
+
+The **bar plot** is used to visulize the relationship among two categorical 
+variables. There are two setup:
++ For absolute frequencies.
++ For relative frequencies.
+
+When i want see the **exact numbers of individuals** the absolute frequency bar plot 
+is more desirable. The problem is it's distribution in each island not clearly.
+```{r}
+ggplot(penguins, aes(x = island, fill = species)) +
+  geom_bar() +
+  labs(
+    title = "Species in each island", 
+    x = "Island", 
+    y = "Absolute frequency"
+  )
+```
+
+When i want see the proportion of individuals in each group the relative 
+frequency bar plot is more desirable.
+```{r}
+ggplot(penguins, aes(x = island, fill = species)) +
+  geom_bar(position = "fill") +
+  labs(
+    title = "Species in each island", 
+    x = "Island", 
+    y = "Relative frequency"
+  )
+```
+
+# Two numerical variables
+
+If the two variables are numerical the **scatterplot** used to visualize the 
+data.
+```{r}
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) + 
+  geom_point() + 
+  labs(
+    title = "Two variables of penguins", 
+    x = "Flipper length [mm]", 
+    y = "Body mass [g]"
+  )
+```
+
+
+# Three or more variables
+
+When the number of variables is upper 2, the strategy focus in represent those 
+variables with colors or shapes.
+```{r}
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) + 
+  geom_point(aes(color = species, shape = island)) + 
+  labs(
+    title = "Multiple characteristics of penguins", 
+    x = "Flipper length [mm]", 
+    y = "Body mass [g]"
+  )
+```
+
+However, the graph begin to be seen crowded of information. For enhance this 
+visualization, i use the `facet_wrap` that split the graph in subplots based on 
+categorical variable.
+```{r}
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) + 
+  geom_point(aes(color = species)) + 
+  facet_wrap(~island) + 
+  labs(
+    title = "Subplots based on penguin island", 
+    x = "Flipper length [mm]", 
+    y = "Body mass [g]"
+  )
+```
+
+# The applications of relationships
+
+```{r}
+glimpse(mpg)
+```
+
+
+Visualize the relationship among *highway miles per gallon* `hwy` and 
+*engine displacement [L]* `displ`. This use *city miles per gallon* `cty` as the 
+third variable.
+```{r}
+ggplot(data = mpg, mapping = aes(x = hwy, y = displ)) +
+  geom_point(aes(color = cty, size = cty)) + 
+  labs(
+    title = "Distribution of mechanic characteristics", 
+    x = "Highway miles per gallon", 
+    y = "Engine displacement [L]", 
+    color = "City miles per gallon", 
+    size = "City miles per gallon"
+  )
+```
+
+If use the same third variable to `linewidth` parameter, this cause errors in 
+the graph.
+```{r}
+ggplot(data = mpg, mapping = aes(x = hwy, y = displ)) +
+  geom_point()
+```
+
+Using the penguin data frame, inspecting the relationship among: 
+`bill_depth_mm`, `bill_length_mm` and `species`.
+```{r}
+ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm)) + 
+  geom_point(aes(color = species)) + 
+  labs(
+    title = "Penguin bill attributes", 
+    x = "Bill depth [mm]", 
+    y = "Bill length [mm]", 
+    color = "Species"
+  )
+```
+
+If i use faceting, the result is:
+```{r}
+ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm)) + 
+  geom_point(aes(color = species)) + 
+  facet_wrap(~species) + 
+  labs(
+    title = "Penguin bill attributes", 
+    x = "Bill depth [mm]", 
+    y = "Bill length [mm]", 
+    color = "Species"
+  )
+```
+
