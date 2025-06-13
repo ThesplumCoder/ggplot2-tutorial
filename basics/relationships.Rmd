@@ -1,0 +1,39 @@
+---
+title: "Plots to Visualize Relationships"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+library(ggthemes)
+```
+
+
+# A numerical and a categorical variable
+
+The **box plot** can help to visualize the general distribution of data using 
+numerical variables related to categorical variables.
+```{r}
+ggplot(penguins, aes(x = species, y = body_mass_g)) +
+  geom_boxplot() +
+  labs(
+    title = "Spread of body mass for each specie", 
+    x = "Species", 
+    y = "Body mass [g]"
+  )
+```
+
+Other plot to visualize the relationship is **density plot**. The `alpha` 
+parameter set the transparency of filled density curves. Also, the `linewidth` 
+can set the thickness of line used for the curves.
+```{r}
+ggplot(penguins, aes(x = body_mass_g, color = species, fill = species)) +
+  geom_density(alpha = 0.5, linewidth = 0.7) + 
+  labs(
+    title = "Density curves for each specie", 
+    x = "Body mass [g]", 
+    y = "Density"
+  )
+```
+

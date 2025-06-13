@@ -1,16 +1,16 @@
 ---
 title: "Introduction to ggplot2"
-output:
-  html_document:
-    df_print: paged
+output: html_notebook
 ---
 
+# Libraries
 ```{r}
 library(tidyverse)
 library(palmerpenguins)
 library(ggthemes)
 ```
 
+# Basic instructions
 A review of penguin dataframe.
 ```{r}
 penguins
@@ -72,6 +72,68 @@ ggplot(data = penguins,
 ```
 
 
+# Different plots
+
+Explore the different `binwidth` is useful for discover better patterns in the 
+data distribution.
+```{r}
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram(binwidth = 20)
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram(binwidth = 2000)
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram(binwidth = 200)
+```
+
+An exploration using *species*.
+```{r}
+ggplot(data = penguins, mapping = aes(y = species)) + 
+  geom_bar()
+```
+
+If want change the color bars, there two variants: `color` change the edges 
+of the bars, `fill` change the color of entire bar.
+```{r}
+ggplot(penguins, aes(x = species)) +
+  geom_bar(color = "dodgerblue")
+
+ggplot(penguins, aes(x = species)) +
+  geom_bar(fill = "dodgerblue")
+```
+
+If want change the bins amount, i use the `bins` parameter.
+```{r}
+ggplot(penguins, mapping = aes(x = body_mass_g)) +
+  geom_histogram(bins = 20, color = "black", fill = "lightgreen")
+```
+
+Exploring the **diamonds dataset** with histogram and different binwidths.
+```{r}
+one = .11
+two = .12
+three = .13
+ggplot(diamonds, mapping = aes(x = carat)) + 
+    geom_histogram(binwidth = one, color = "black", fill = "dodgerblue") + 
+    labs(
+      title = paste("Binwidth of ", one)
+    )
+ggplot(diamonds, mapping = aes(x = carat)) + 
+    geom_histogram(binwidth = two, color = "black", fill = "dodgerblue") + 
+    labs(
+      title = paste("Binwidth of ", two)
+    )
+ggplot(diamonds, mapping = aes(x = carat)) + 
+    geom_histogram(binwidth = three, color = "black", fill = "dodgerblue") + 
+    labs(
+      title = paste("Binwidth of ", three)
+    )
+```
+
+Also use the density plot.
+```{r}
+ggplot(diamonds, mapping = aes(x = carat)) + 
+    geom_density()
+```
 
 
 
